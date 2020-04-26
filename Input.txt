@@ -1,0 +1,9 @@
+IP rtsg.1023 > csam.login: Flags [S], seq 768512:768512, win 4096, opts [mss 1024]
+IP csam.login > rtsg.1023: Flags [S.], seq, 947648:947648, ack 768513, win 4096, opts [mss 1024]
+IP rtsg.1023 > csam.login: Flags [.], ack 1, win 4096
+IP rtsg.1023 > csam.login: Flags [P.], seq 1:2, ack 1, win 4096, length 1
+IP csam.login > rtsg.1023: Flags [.], ack 2, win 4096
+IP rtsg.1023 > csam.login: Flags [P.], seq 2:21, ack 1, win 4096, length 19
+IP csam.login > rtsg.1023: Flags [P.], seq 1:2, ack 21, win 4077, length 1
+IP csam.login > rtsg.1023: Flags [P.], seq 2:3, ack 21, win 4077, urg 1, length 1
+IP csam.login > rtsg.1023: Flags [P.], seq 3:4, ack 21, win 4077, urg 1, length 1
