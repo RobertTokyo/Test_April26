@@ -6,21 +6,29 @@
 
 CommandHTTP::CommandHTTP()
 {
+#ifdef WINDOWS
 	WSADATA wsaData;
 
 	int startupResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (startupResult != 0)
 		throw std::exception("Can't start socket layer");
+#elif LINUX
+#endif
 }
 
 CommandHTTP::CommandHTTP(const std::string& req)
 	: Request(req)
 {
+#ifdef WINDOWS
 	WSADATA wsaData;
 
 	int startupResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (startupResult != 0)
 		throw std::exception("Can't start socket layer");
+#elif
+#ifdef LINUX
+#endif
+#endif
 }
 
 std::string CommandHTTP::get(const std::string& url)
@@ -64,8 +72,11 @@ bool getAddressFromDomain(const std::string& host, const std::string& port)
 	struct addrinfo *result = NULL;
 	struct addrinfo *ptr = NULL;
 	struct addrinfo hints;
-	
+#ifdef WINDOWS
 	ZeroMemory(&hints, sizeof(hints));
+#elif LINUX
+
+#endif
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
@@ -107,6 +118,7 @@ bool CommandHTTP::makeConnection()
 			Connected = true;
 		else
 		{
+#ifdef WINDOWS
 			DWORD dwErr = GetLastError();
 			LPVOID lpMsgBuf;
 			DWORD bufLen = FormatMessage(
@@ -125,6 +137,9 @@ bool CommandHTTP::makeConnection()
 
 				LocalFree(lpMsgBuf);
 			}
+#elif LINUX
+
+#endif 
 		}
 	}
 	return Connected;
