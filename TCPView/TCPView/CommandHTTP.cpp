@@ -91,37 +91,18 @@ bool CommandHTTP::makeConnection()
 
 		int connectResult{ -1 };
 		SOCKADDR_IN socketAddr;
-		if (isdigit(Host[0]))
+		std::string DQHost{ Host };
+		if (!isdigit(DQHost[0]))
 		{
-			socketAddr.sin_addr.s_addr = inet_addr(Host.c_str()); // Start Address in dotted quad
-			socketAddr.sin_family = AF_INET;
-			socketAddr.sin_port = htons(Request.getPort());
-			connectResult = connect(sock, (SOCKADDR *)&socketAddr, sizeof(socketAddr));
+			hostent* hostname = gethostbyname(Host.c_str());
+			if (hostname)
+				DQHost = std::string(inet_ntoa(**(in_addr**)hostname->h_addr_list));
 		}
-		else
-		{
-			struct addrinfo hints;
-
-			ZeroMemory(&hints, sizeof(hints));
-			hints.ai_family = AF_UNSPEC;
-			hints.ai_socktype = SOCK_STREAM;
-			hints.ai_protocol = IPPROTO_TCP;
-
-			std::stringstream ss;
-			ss << port;
-			std::string strPort = ss.str();
-			struct addrinfo *result = NULL;
-
-			DWORD dwRetval = getaddrinfo(Host.c_str(), strPort.c_str(), &hints, &result);
-			if (dwRetval == 0) {
-				//std::assert(result->ai_family== AF_INET);
-				if(result->ai_family == AF_INET)
-					connectResult = connect(sock, (SOCKADDR *)result, sizeof(addrinfo));
-				freeaddrinfo(result);
-			}
-		}
-	
-		
+		socketAddr.sin_addr.s_addr = inet_addr(DQHost.c_str()); // Start Address in dotted quad
+		socketAddr.sin_family = AF_INET;
+		socketAddr.sin_port = htons(Request.getPort());
+		connectResult = connect(sock, (SOCKADDR *)&socketAddr, sizeof(socketAddr));
+				
 		if (connectResult == 0)
 			Connected = true;
 		else
