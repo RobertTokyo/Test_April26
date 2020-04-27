@@ -1,18 +1,23 @@
 #pragma once
-#include "ICommandHTTP.h"
 
+#include <string>
+
+
+class ICommandHTTP;
+
+// use ip2c.org to get geolocation
 class LocationResolver
 {
 public:
-	LocationResolver(ICommandHTTP* pHTTP)
-		:mpHTTP{ pHTTP }
-	{};
+	LocationResolver() = default;
+	LocationResolver(ICommandHTTP* pHTTP, const std::string& ipaddress);
 
 	virtual ~LocationResolver() = default;
 
 	virtual std::string getLocation(const std::string& address);
 
 protected:
-	ICommandHTTP* mpHTTP;
+	ICommandHTTP*	mpHTTP;
+	std::string		IPAddress;
 };
 

@@ -142,28 +142,10 @@ void TCPReport::setTime(const std::string& token)
 }
 
 // This token should be an IP address, eith dotted quad or FQDN
-void TCPReport::setLocation(const std::string& token)
+void TCPReport::setLocation(const std::string& /*token*/)
 {
 	if (mpLocn != nullptr)// Do we have a way to get geolocation ?
 	{
-		std::string res = mpLocn->getLocation(DestHost);
-		// result should be " 1;GB;GBR;United Kingdom"
-		// 0 is an error; 2 is not found
-		switch (res[0])
-		{
-		case '0':
-			Location = "Error";
-			break;
-		case '1':
-		{
-			size_t index = res.length() - 1;
-			while (res[index] != ';')--index;
-			Location = res.substr(index+1);
-		}
-			break;
-		case '2':
-			Location = "Unknown";
-			break;
-		}
+		Location = mpLocn->getLocation(DestHost);
 	}
 }

@@ -79,17 +79,13 @@ int main(int argc, char** argv)
 	std::cin >> count;
 
 	CommandHTTP cmd;
-	LocationResolver locate{ &cmd };
+	LocationResolver locate{ &cmd, "77.55.235.219" };
 	TCPReport report;
 	for (int i = 0; i < count; i++)
 	{
 		SysCommand cmd;
 		std::string res = cmd.execute("tcpview");
 		report.parse(res);
-		std::stringstream ss;
-		ss << "https://77.55.235.219/" << report.getDest();
-		locate.getLocation(ss.str());
-
 		std::cout << report.getTimestamp() << "/t" << report.getSrc() << "/t" << report.getDest() << "/t" << report.getLocation();
 	}
 }
