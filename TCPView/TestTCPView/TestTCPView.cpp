@@ -48,7 +48,7 @@ namespace TestTCPView
 			{
 				std::string ts = report.getTimestamp();
 				Assert::IsTrue(ts.length() > 0);
-				Assert::IsTrue(strcmp("26 April 2020, 12:07", ts.c_str())==0);
+				Assert::IsTrue(strcmp("27 April 2020, 12:07", ts.c_str())==0);
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace TestTCPView
 		{
 			// This mock return 0, 1, 2 as location result (and repeats)
 			MockHTTP http;
-			LocationResolver locn(&http);
+			LocationResolver locn(&http, "77.55.235.219");
 			TCPReport report(&locn);
 			bool parsed = report.parse(msg, 5);
 			Assert::IsTrue(parsed);

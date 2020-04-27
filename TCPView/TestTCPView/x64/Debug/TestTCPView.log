@@ -1,0 +1,13 @@
+﻿  pch.cpp
+  CommandHTTP.cpp
+  LocationResolver.cpp
+  SysCommand.cpp
+  TCPReport.cpp
+  URL.cpp
+  MockHTTP.cpp
+  TestCmdModule.cpp
+  TestHTTP.cpp
+  TestTCPView.cpp
+  Generating Code...
+     Creating library D:\MyCode\RelateData\git\Test_April26\TCPView\x64\Debug\TestTCPView.lib and object D:\MyCode\RelateData\git\Test_April26\TCPView\x64\Debug\TestTCPView.exp
+  TestTCPView.vcxproj -> D:\MyCode\RelateData\git\Test_April26\TCPView\x64\Debug\TestTCPView.dll
