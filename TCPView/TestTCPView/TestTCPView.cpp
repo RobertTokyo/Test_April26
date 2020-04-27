@@ -2,6 +2,9 @@
 #include "CppUnitTest.h"
 #include "TCPReport.h"
 #include "MockHTTP.h"
+#include <chrono>
+#include <ctime>
+#include <array>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -48,7 +51,15 @@ namespace TestTCPView
 			{
 				std::string ts = report.getTimestamp();
 				Assert::IsTrue(ts.length() > 0);
-				Assert::IsTrue(strcmp("27 April 2020, 12:07", ts.c_str())==0);
+
+				std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+				std::tm* local = std::localtime(&now);
+				std::stringstream ss;
+				std::array<std::string, 12> months{ "January", "February", "March", "April", "May", "June",
+								"July", "August", "September", "October", "November", "Decemeber" };
+				ss << local->tm_mday << ' ' << months[local->tm_mon] << ' ' << local->tm_year + 1900;
+				ss << ", 12:07";
+				Assert::IsTrue(strcmp(ss.str().c_str(), ts.c_str())==0);
 			}
 		}
 
